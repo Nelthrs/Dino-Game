@@ -19,10 +19,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 isJumping = true;
                 jump();
             }
-
-
         }
     }
+
+
+    function HMDJumpController() {
+            if (!isJumping) {
+                isJumping = true;
+                jump();
+        }
+    }
+
+    setInterval(function() {
+        fetch('http://127.0.0.1:5000/').then(function (response) {
+            // The API call was successful!
+			console.log(response);
+            return response.json();
+        }).then(function (data) {
+            // This is the JSON from our response
+            console.log(data);
+			if (data) {
+				HMDJumpController();
+			}
+        }).catch(function (err) {
+            // There was an errors
+            console.warn('Something went wrong.', err);
+        });
+
+    }, 1000);
 
     document.addEventListener("keyup", control);
 
